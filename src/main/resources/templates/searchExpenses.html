@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments :: head">
+</head>
+<body>
+<header th:replace="fragments :: header"></header>
+
+<article>
+    <div sec:authorize="isAuthenticated()">
+        <form method="POST" th:action="@{/logout}">
+            Ulogirani ste kao <span sec:authentication="name">Korisnik</span>
+            <input type="submit" value="Logout" class="btn btn-danger"/>
+        </form>
+    </div>
+    <h2>Pretraga troškova u vašim novčanicima</h2>
+    <form method="POST" th:object="${searchObject}">
+
+        <label for="name">Naziv</label>
+        <input type="text" id="name" class="form-control" placeholder="Ime troška" th:field="*{name}"/>
+        <span style="color:red" class="validation-error" th:if="${#fields.hasErrors('name')}"
+              th:errors="*{name}">name error</span><br>
+
+        <label for="name">Iznos</label><br>
+        <input style="width: 150px;" type="number"  id="priceMin" th:field="*{priceMin}" name="priceMin" placeholder="Minimalno" >
+        <span style="color:red" class="validation-error" th:if="${#fields.hasErrors('priceMin')}"
+              th:errors="*{priceMin}">name error
+					</span><br>
+
+        <input style="width: 150px;" type="number" id="priceMax" th:field="*{priceMax}" name="priceMax" placeholder="Maximalno">
+        <span style="color:red" class="validation-error" th:if="${#fields.hasErrors('priceMax')}"
+              th:errors="*{priceMax}">name error
+        </span><br>
+
+        <label>Vrsta troška:</label><br>
+        <select th:field="*{type}">
+            <option value="">--Odaberite vrijednost--</option>
+            <option th:each="type : ${expenseTypes}" th:value="${type}" th:text="${type}"></option>
+        </select><br>
+        <span style="color:red" class="validation-error" th:if="${#fields.hasErrors('type')}"
+              th:errors="*{type}">name error
+					</span><br>
+
+        <input type="submit" class="btn btn-success" value="Pretraži" style="margin-top: 20px">
+    </form>
+
+
+    <br>
+    <br>
+
+
+    <h3>Rezultati pretrage</h3>
+    <br>
+    <div class="container">
+        <div class="row col-md-12 table-responsive">
+            <table id="table" class="table">
+                <thead>
+                <tr>
+                    <th>Naziv troška</th>
+                    <th>Vrsta troška</th>
+                    <th>Iznos</th>
+                    <th>Novčanik</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="expense, rowStat: ${expenses}"
+                    th:style="${rowStat.odd} ? 'color: black' : 'color: red;'">
+                    <td th:text="${expense.name}">Naziv</td>
+                    <td th:text="${expense.expenseType}">PIĆE</td>
+                    <td th:text="${expense.price}">444.33</td>
+                    <td th:text="${expense.wallet.name}">Wllet name</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+
+</article>
+
+
+</body>
+</html>

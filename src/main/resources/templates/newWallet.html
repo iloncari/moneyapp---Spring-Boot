@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments :: head"></head>
+<body>
+<header th:replace="fragments :: header"></header>
+<article>
+    <p>Naučite štedjeti uz MoneySaver <br>
+        Pratite svoje troškove </p> <br>
+    <br>
+    <div sec:authorize="isAuthenticated()">
+        <form method="POST" th:action="@{/logout}">
+            Ulogirani ste kao <span sec:authentication="name">Korisnik</span>.
+            <input type="submit" value="Logout" class="btn btn-danger"/>
+        </form>
+    </div>
+    <form method='POST' th:object="${wallet}" th:action="@{newWallet}">
+        <h3>Unos novog novčanika</h3>
+            <label> Ime:</label><br>
+            <input type="text" maxlength="50" min="3" placeholder="Naziv novčanika" th:field="*{name}"/><br>
+            <span style="color:red" id="validation_span" class="validation-error" th:if="${#fields.hasErrors('name')}"
+                  th:errors="*{name}">name error
+					</span><br>
+            <label>Vrsta troška:</label><br>
+            <select th:field="*{walletType}">
+                <option value="">--Odaberite vrijednost--</option>
+                <option th:each="type : ${walletTypes}" th:value="${type}" th:text="${type}"></option>
+            </select><br>
+            <span style="color:red" class="validation-error" th:if="${#fields.hasErrors('walletType')}"
+                  th:errors="*{walletType}">name error
+					</span><br>
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+            <input type="submit" value="Unesi novčanik">
+    </form>
+</article>
+</body>
+</html>

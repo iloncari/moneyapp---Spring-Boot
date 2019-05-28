@@ -1,0 +1,52 @@
+@charset "UTF-8";
+#header{
+	margin: 0 auto;
+	width: 478px;
+	text-align: center;
+}
+body{
+	background-color: #e8dfab;
+}
+article{
+	margin: 0 auto;
+	width: 478px;
+}
+
+p{
+	font: italic bold 15px/30px Georgia, serif;
+}
+strong{
+	font: italic bold 17px Georgia, serif;
+}
+
+input[type=text], input[type=number],input[type=password], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=submit], a {
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+form, #stats, #about, #register, #div1{
+  border-radius: 5px;
+  background-color:#edf4f4;
+  padding: 20px;
+    gravity: center;
+}
+
+#validation_span {
+   color:red;
+}
