@@ -75,7 +75,7 @@ public class UserRestController {
             for (Authority a : userAuthorities)
                 authorityRepository.deleteById(a.getId());
         }
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(HttpStatus.FOUND);
     }
 
 }

@@ -59,7 +59,93 @@ public class ExpenseControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("expenseTypes"))
                 .andExpect(model().attribute("expenseTypes", Matchers.arrayWithSize(5)))
+                .andExpect(model().attributeExists("wallets"))
+                .andExpect(model().attribute("wallets", Matchers.hasSize(1)))
+                .andExpect(model().attributeExists("expense"))
                 .andExpect(view().name("index"));
+    }
+
+    @Test
+    public  void testSaveNewExpense() throws Exception{
+        Expense expense = new Expense();
+        expense.setName("Keksi");
+        expense.setPrice(15d);
+        expense.setCreateDate(LocalDateTime.now());
+        expense.setExpenseType(Expense.Type.HRANA);
+        expense.setWallet(walletRepository.findByid(1l));
+
+        this.mockMvc.perform(post("/expenses/new").with(user("admin").password("adminpass").roles("USER", "ADMIN"))
+        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+        .flashAttr("expense", expense))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("expense"))
+                .andExpect(model().attributeExists("wallet"))
+                .andExpect(model().attributeExists("totalSum"))
+                .andExpect(model().attribute("totalSum", Matchers.equalTo(6764.72d)))
+                .andExpect(model().attributeExists("valuta"))
+                .andExpect(model().attribute("valuta", " kn"))
+                .andExpect(view().name("expenseConfirmed"));
+    }
+
+
+    @Test
+    public void testShowSearchForm() throws Exception {
+        this.mockMvc
+                .perform(get("/expenses/searchExpenses").with(user("admin").password("adminpass")
+                        .roles("USER", "ADMIN")).with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("searchObject"))
+                .andExpect(model().attributeExists("expenseTypes"))
+                .andExpect(model().attribute("expenseTypes", Matchers.arrayWithSize(5)))
+                .andExpect(view().name("searchExpenses"));
+    }
+
+    @Test
+    public void testProcessSearchForm() throws Exception{
+        SearchFormResult searchFormResult = new SearchFormResult();
+        searchFormResult.setName("nov");
+        searchFormResult.setPriceMax(1.5d);
+        searchFormResult.setPriceMin(7000d);
+        searchFormResult.setType(Expense.Type.HRANA);
+
+        this.mockMvc
+                .perform(post("/expenses/searchExpenses")
+                        .with(user("admin").password("adminpass").roles("USER", "ADMIN"))
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .flashAttr("searchObject", searchFormResult))
+                .andExpect(status().isOk())
+                //.andExpect(model().attributeExists("expenses")) ???? expenses does not exists
+                .andExpect(model().attributeExists("searchObject"))
+                .andExpect(view().name("searchExpenses"));
+    }
+
+    @Test
+    public void testShowNewWalletScreen() throws Exception {
+        this.mockMvc
+                .perform(get("/expenses/newWallet").with(user("admin").password("adminpass")
+                        .roles("USER", "ADMIN")))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("wallet"))
+                .andExpect(model().attributeExists("walletTypes"))
+                .andExpect(model().attribute("walletTypes", Matchers.arrayWithSize(3)))
+                .andExpect(view().name("newWallet"));
+    }
+    @Test
+    public void testSaveNewWallet() throws Exception{
+
+        Wallet wallet = new Wallet();
+        wallet.setName("Adminov Test DOLAR novčanik");
+        wallet.setWalletType(Wallet.Type.DOLAR);
+        wallet.setUser(userRepository.getById(1l));
+        wallet.setCreateDate(LocalDateTime.now());
+
+        this.mockMvc
+                .perform(post("/expenses/newWallet")
+                        .with(user("admin").password("adminpass").roles("USER", "ADMIN"))
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .flashAttr("wallet", wallet))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/expenses/new"));
     }
 
 }

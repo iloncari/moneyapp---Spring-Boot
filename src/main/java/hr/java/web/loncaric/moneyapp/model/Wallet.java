@@ -38,7 +38,7 @@ public class Wallet {
     @Enumerated(EnumType.STRING)
     private Type walletType;
 
-    @OneToMany(mappedBy = "wallet", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "wallet", fetch = FetchType.LAZY)
     @JsonProperty("expenses")
     private List<Expense> expenses;
 
@@ -107,15 +107,5 @@ public class Wallet {
         this.createDate = createDate;
     }
 
-    @Override
-    public String toString() {
-        return "Wallet{" +
-                "id=" + id +
-                ", createDate=" + createDate +
-                ", name='" + name + '\'' +
-                ", walletType=" + walletType +
-                ", expenses=" + expenses +
-                ", user=" + user +
-                '}';
-    }
+
 }

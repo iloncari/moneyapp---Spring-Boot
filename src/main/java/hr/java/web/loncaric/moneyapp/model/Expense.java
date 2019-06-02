@@ -99,15 +99,5 @@ public class Expense {
         this.id = id;
     }
 
-    @Override
-    public String toString() {
-        return "Expense{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", expenseType=" + expenseType +
-                ", createDate=" + createDate +
-                ", wallet=" + wallet +
-                '}';
-    }
+
 }

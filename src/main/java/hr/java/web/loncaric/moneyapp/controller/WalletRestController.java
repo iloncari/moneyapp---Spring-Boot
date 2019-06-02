@@ -60,6 +60,6 @@ public class WalletRestController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         walletRepository.deleteById(Long.valueOf(id));
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(HttpStatus.FOUND);
     }
 }
