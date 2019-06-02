@@ -1,3 +1,7 @@
+delete from users;
+delete from authorities;
+delete from wallet;
+delete from expense;
 insert into users(id, username, password, enabled)
 values ( 1, 'admin', '$2a$10$cxYLqzVuWNQo8PKUwYCaIu9bxozb7GVSDLcGm5NqLrokUVH9F7B.6', 1);
 insert into users(id, username, password, enabled)

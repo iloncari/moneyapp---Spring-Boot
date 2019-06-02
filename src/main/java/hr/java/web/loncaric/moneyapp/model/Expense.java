@@ -27,16 +27,16 @@ public class Expense {
     private Long id;
 
     @Column(name = "name")
-    @NotEmpty(message = "Naziv troška je obavezan")
-    @Size(min = 3, max = 50, message = "Naziv troška mora imati između 3 i 50 znakova")
+    @NotEmpty(message = "{validation.expense.name_empty}")
+    @Size(min = 3, max = 50, message = "{validation.expense.name_length}")
     private String name;
 
     @Column(name = "price")
-    @NotNull(message = "Iznos troška je obavezan")
+    @NotNull(message = "{validation.expense.price_empty}")
     private Double price;
 
     @Column(name = "type")
-    @NotNull(message = "Morate odabrati kategoriju troška")
+    @NotNull(message = "{validation.expense.type_empty}")
     @Enumerated(EnumType.STRING)
     private Type expenseType;
 

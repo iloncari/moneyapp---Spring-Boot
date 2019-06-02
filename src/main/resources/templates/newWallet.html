@@ -5,32 +5,33 @@
 <body>
 <header th:replace="fragments :: header"></header>
 <article>
-    <p>Naučite štedjeti uz MoneySaver <br>
+    <p th:text="#{msg.index.intro_text}">Naučite štedjeti uz MoneySaver <br>
         Pratite svoje troškove </p> <br>
     <br>
     <div sec:authorize="isAuthenticated()">
         <form method="POST" th:action="@{/logout}">
-            Ulogirani ste kao <span sec:authentication="name">Korisnik</span>.
-            <input type="submit" value="Logout" class="btn btn-danger"/>
+            <p th:text="#{msg.loged_as}">Ulogirani ste kao </p>
+            <p sec:authentication="name">Korisnik</p>
+            <input type="submit" th:value="#{msg.btn.logout}" class="btn btn-danger"/>
         </form>
     </div>
     <form method='POST' th:object="${wallet}" th:action="@{newWallet}">
-        <h3>Unos novog novčanika</h3>
-            <label> Ime:</label><br>
-            <input type="text" maxlength="50" min="3" placeholder="Naziv novčanika" th:field="*{name}"/><br>
+        <h3 th:text="#{msg.label.new_wallet}">Unos novog novčanika</h3>
+            <label th:text="#{msg.label.wallet_name}"> Ime:</label><br>
+            <input type="text" maxlength="50" min="3"  th:placeholder="#{msg.label.wallet_name}" th:field="*{name}"/><br>
             <span style="color:red" id="validation_span" class="validation-error" th:if="${#fields.hasErrors('name')}"
                   th:errors="*{name}">name error
 					</span><br>
-            <label>Vrsta troška:</label><br>
+            <label  th:text="#{msg.label.wallet_type}">Vrsta novčanika:</label><br>
             <select th:field="*{walletType}">
-                <option value="">--Odaberite vrijednost--</option>
+                <option value="" th:text="#{msg.label.option.wallet_type_hint}">--Odaberite vrijednost--</option>
                 <option th:each="type : ${walletTypes}" th:value="${type}" th:text="${type}"></option>
             </select><br>
             <span style="color:red" class="validation-error" th:if="${#fields.hasErrors('walletType')}"
                   th:errors="*{walletType}">name error
 					</span><br>
             <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-            <input type="submit" value="Unesi novčanik">
+            <input type="submit"  th:value="#{msg.label.inset_wallet}">
     </form>
 </article>
 </body>

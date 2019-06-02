@@ -9,39 +9,40 @@
 <article>
     <div sec:authorize="isAuthenticated()">
         <form method="POST" th:action="@{/logout}">
-            Ulogirani ste kao <span sec:authentication="name">Korisnik</span>
-            <input type="submit" value="Logout" class="btn btn-danger"/>
+            <p th:text="#{msg.loged_as}">Ulogirani ste kao </p>
+            <p sec:authentication="name">Korisnik</p>
+            <input type="submit" th:value="#{msg.btn.logout}" class="btn btn-danger"/>
         </form>
     </div>
-    <h2>Pretraga troškova u vašim novčanicima</h2>
+    <h2 th:text="#{msg.label.expense_search}">Pretraga troškova u vašim novčanicima</h2>
     <form method="POST" th:object="${searchObject}">
 
-        <label for="name">Naziv</label>
-        <input type="text" id="name" class="form-control" placeholder="Ime troška" th:field="*{name}"/>
+        <label th:text="#{msg.label.expense_name}" for="name">Naziv</label>
+        <input type="text" id="name" class="form-control" th:placeholder="#{msg.label.expense_name}" th:field="*{name}"/>
         <span style="color:red" class="validation-error" th:if="${#fields.hasErrors('name')}"
               th:errors="*{name}">name error</span><br>
 
-        <label for="name">Iznos</label><br>
-        <input style="width: 150px;" type="number"  id="priceMin" th:field="*{priceMin}" name="priceMin" placeholder="Minimalno" >
+        <label th:text="#{msg.label.price}"  for="name">Iznos</label><br>
+        <input style="width: 350px;" type="number"  id="priceMin" th:field="*{priceMin}" name="priceMin" th:placeholder="#{msg.label.min_expense_price}">
         <span style="color:red" class="validation-error" th:if="${#fields.hasErrors('priceMin')}"
               th:errors="*{priceMin}">name error
 					</span><br>
 
-        <input style="width: 150px;" type="number" id="priceMax" th:field="*{priceMax}" name="priceMax" placeholder="Maximalno">
+        <input style="width: 350px;" type="number" id="priceMax" th:field="*{priceMax}" name="priceMax" th:placeholder="#{msg.label.max_expense_price}">
         <span style="color:red" class="validation-error" th:if="${#fields.hasErrors('priceMax')}"
               th:errors="*{priceMax}">name error
         </span><br>
 
-        <label>Vrsta troška:</label><br>
+        <label th:text="#{msg.label.expense_types}">Vrsta troška:</label><br>
         <select th:field="*{type}">
-            <option value="">--Odaberite vrijednost--</option>
+            <option value="" th:text="#{msg.label.option.eypense_types_hint}">--Odaberite vrijednost--</option>
             <option th:each="type : ${expenseTypes}" th:value="${type}" th:text="${type}"></option>
         </select><br>
         <span style="color:red" class="validation-error" th:if="${#fields.hasErrors('type')}"
               th:errors="*{type}">name error
 					</span><br>
 
-        <input type="submit" class="btn btn-success" value="Pretraži" style="margin-top: 20px">
+        <input type="submit" class="btn btn-success" th:value="#{msg.btn.search}" style="margin-top: 20px">
     </form>
 
 
@@ -49,17 +50,17 @@
     <br>
 
 
-    <h3>Rezultati pretrage</h3>
+    <h3 th:text="#{msg.label.search_results}">Rezultati pretrage</h3>
     <br>
     <div class="container">
         <div class="row col-md-12 table-responsive">
             <table id="table" class="table">
                 <thead>
                 <tr>
-                    <th>Naziv troška</th>
-                    <th>Vrsta troška</th>
-                    <th>Iznos</th>
-                    <th>Novčanik</th>
+                    <th th:text="#{msg.label.expense_name}">Naziv troška</th>
+                    <th th:text="#{msg.label.expense_types}">Vrsta troška</th>
+                    <th th:text="#{msg.label.price}">Iznos</th>
+                    <th th:text="#{msg.label.wallet}">Novčanik</th>
                 </tr>
                 </thead>
                 <tbody>

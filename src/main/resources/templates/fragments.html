@@ -1,23 +1,45 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-	
-	<body>
-		<head th:fragment="head">
-			<title>Money Saver</title>
-			<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-			<link rel="shortcut icon" type="image/x-icon" th:href="@{/images/pig_saver.jpg}" />
-			<meta charset="UTF-8"></meta>
-			<link th:href="@{/css/style.css}" rel="stylesheet" />
-			<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" 
-				integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
-				 crossorigin="anonymous">
-		</head>
-		
-		<div th:fragment="header" id="header" >
-			<img th:src="@{/images/banner.png}" width="478px" height="105px"/>
-		</div>
-	</body>
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<body>
+<head th:fragment="head">
+    <title>Money Saver</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/pig_saver.jpg}"/>
+    <meta charset="UTF-8"></meta>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+          crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#locales").change(function () {
+                var selectedOption = $('#locales').val();
+                if (selectedOption != '') {
+                    window.location.replace('?language=' + selectedOption);
+                }
+            })
+        })
+    </script>
+</head>
+
+<div th:fragment="header" id="header">
+    <img th:src="@{/images/banner.png}" width="478px" height="105px"/>
+    <select style="width: 200px;" id="locales">
+        <option value="hr"
+                th:selected="${#locale.language == 'hr'}"
+                th:text="#{msg.lang.hr}"></option>
+        <option value="en"
+                th:selected="${#locale.language == 'en'}"
+                th:text="#{msg.lang.en}"></option>
+    </select>
+</div>
+
+
+</body>
 </html>
 	

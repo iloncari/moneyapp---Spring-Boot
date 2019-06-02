@@ -7,17 +7,18 @@
 		<article>
 			<div sec:authorize="isAuthenticated()">
 				<form method="POST" th:action="@{/logout}">
-					Ulogirani ste kao <span sec:authentication="name">Korisnik</span>.
-					<input type="submit" value="Logout" class="btn btn-danger" />
+					<p th:text="#{msg.loged_as}">Ulogirani ste kao </p>
+					<p sec:authentication="name">Korisnik</p>.
+					<input type="submit" th:value="#{msg.btn.logout}" class="btn btn-danger"/>
 				</form>
 			</div>
-			<p>Uspješno ste unijeli trošak <strong th:text="${expense.name}"> EXPENSE.NAME</strong> u iznosu od <strong th:text="${expense.price}">EXPENSE.AMOUNT </strong>kn</p>
-			<p>Trošak je unesen pod kategorijom <strong th:text="${expense.expenseType}">EXPENSE.TYPE</strong> na datum <strong th:text="${expense.createDate}">EXPENSE.DATE</strong></p>
-            <p>Potrošnja novčanika <strong th:text="${expense.wallet.name}">Wallet.name</strong> je <strong th:text="${totalSum}">suma</strong><strong th:text="${valuta}">Wallet.valuta</strong></p>
+			<p th:text="#{msg.label.detail.success_enter} +  ' ' + ${expense.name} + ' ' + #{msg.label.detail.expense_value} + ' ' + ${expense.price}"></p>
+			<p th:text="#{msg.label.detail.category} +  ' ' + ${expense.expenseType} + ' ' + #{msg.label.detail.on_date} + ' ' + ${expense.createDate}"></p>
+			<p th:text="#{msg.label.detail.wallet_balance} +  ' ' + ${expense.wallet.name} + ' ' + #{msg.label.detail.wallet_balance_is} + ' ' + ${totalSum}"></p>
 			<div   style="text-align: center;">
-				<a style="float: left; width: 140px; margin-right: 5px;" sec:authorize="hasAuthority('ADMIN')" class="btn btn-danger"  th:href="@{/expenses/resetWallet}">Resetiraj novčanik</a>
-				<a  style="float: left; margin-right: 5px; width: 70px;" th:href="@{/expenses/new}">Novi</a>
-				<a  style="float: left; width: 100px;" th:href="@{/expenses/searchExpenses}">Pretraga</a>
+				<a style="float: left; width: 140px; margin-right: 5px;" sec:authorize="hasAuthority('ADMIN')" class="btn btn-danger"  th:href="@{/expenses/resetWallet}" th:text="#{msg.btn_reset_wallet}">Resetiraj novčanik</a>
+				<a  style="float: left; margin-right: 5px; width: 80px;" th:href="@{/expenses/new}" th:text="#{msg.btn.new_expense}">Novi</a>
+				<a  style="float: left; width: 100px;" th:href="@{/expenses/searchExpenses}" th:text="#{msg.btn.search}">Pretraga</a>
 			</div>
 
 		</article>

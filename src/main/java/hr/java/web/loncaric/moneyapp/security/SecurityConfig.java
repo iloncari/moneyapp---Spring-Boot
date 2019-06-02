@@ -70,4 +70,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.headers().frameOptions().disable();
         http.csrf().ignoringAntMatchers("/**");
     }
+
+
 }

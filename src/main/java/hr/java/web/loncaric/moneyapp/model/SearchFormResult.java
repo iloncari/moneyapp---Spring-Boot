@@ -7,15 +7,15 @@ import javax.validation.constraints.NotNull;
 
 @Data
 public class SearchFormResult {
-    @NotEmpty(message = "Naziv troška je obavezan")
+    @NotEmpty(message = "{validation.expense.name_empty}")
     String name;
-    @NotNull(message = "Minimalni iznos troška je obavezan")
+    @NotNull(message = "{validaton.expense.price_min_error}")
     private Double priceMin;
-    @NotNull(message = "Maksimalni iznos troška je obavezan")
+    @NotNull(message = "{validaton.expense.price_max_error}")
     private Double priceMax;
 
 
-    @NotNull(message = "Morate odabrati kategoriju troška")
+    @NotNull(message = "{validation.expense.type_empty}")
     private Expense.Type type;
 
     public Expense.Type getType() {

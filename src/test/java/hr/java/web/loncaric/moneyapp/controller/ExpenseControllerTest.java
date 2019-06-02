@@ -42,7 +42,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 public class ExpenseControllerTest {
-
+    private Logger log = LoggerFactory.getLogger(ExpenseControllerTest.class);
     @Autowired
     private MockMvc mockMvc;
     @Autowired
@@ -52,30 +52,36 @@ public class ExpenseControllerTest {
     @Autowired
     UserRepository userRepository;
 
-
     @Test
-    public void showNewExpenseForm() throws Exception {
+    public void saveNewExpense() throws Exception {
+        Wallet wallet = walletRepository.getById(Long.valueOf(1));
 
-        List<Wallet> userWallets = walletRepository.findWalletsForUserByUsername("admin");
-        if(userWallets.size()==0){
-            this.mockMvc.perform(get("/expenses/new").with(user("admin").password("adminpass").roles("USER", "ADMIN")).with(csrf()))
-                    .andExpect(status().isOk())
-                    .andExpect(model().attributeExists("walletTypes"))
-                    .andExpect(model().attribute("walletTypes", Matchers.arrayWithSize(3)))
-                    .andExpect(model().attributeExists("wallet"))
-                    .andExpect(view().name("newWallet"));
-        }else{
-            this.mockMvc
-                    .perform(get("/expenses/new").with(user("admin").password("adminpass")
-                            .roles("USER", "ADMIN")).with(csrf()))
-                    .andExpect(status().isOk())
-                    .andExpect(model().attributeExists("expenseTypes"))
-                    .andExpect(model().attribute("expenseTypes", Matchers.arrayWithSize(5)))
-                    .andExpect(view().name("index"));
-        }
+        Expense expense = new Expense();
+        expense.setName("Mlijeko");
+        expense.setPrice(Double.valueOf(13));
+        expense.setCreateDate(LocalDateTime.now());
+        expense.setExpenseType(Expense.Type.PIĆE);
+        expense.setWallet(wallet);
+
+        this.mockMvc
+                .perform(post("/expenses/new")
+                        .with(user("admin").password("adminpass").roles("USER", "ADMIN"))
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("expense"))
+                .andExpect(model().attributeExists("valuta"))
+                .andExpect(model().attribute("valuta", " kn"))
+                .andExpect(model().attributeExists("totalSum"))
+                .andExpect(model().attribute("totalSum", Matchers.equalTo(13d)))
+                .andExpect(view().name("expenseConfirmed"));
     }
 
-    @Test
+
+
+
+
+
+  /*  @Test
     public void saveNewExpense() throws Exception {
         Wallet wallet = walletRepository.getById(Long.valueOf(1));
 
@@ -137,5 +143,5 @@ public class ExpenseControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("searchObject"))
                 .andExpect(view().name("searchExpenses"));
-    }
+    }*/
 }

@@ -30,11 +30,11 @@ public class Wallet {
     private LocalDateTime createDate;
 
     @Column(name = "name")
-    @NotEmpty(message = "Ime novčanika je obvezno")
+    @NotEmpty(message = "{validation.wallet.name_empty}")
     private String name;
 
     @Column(name = "type")
-    @NotNull(message = "Vrsta novčanika je obvezna")
+    @NotNull(message = "{validation.wallet.type_empty}")
     @Enumerated(EnumType.STRING)
     private Type walletType;
 
