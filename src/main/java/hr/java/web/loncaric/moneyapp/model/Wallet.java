@@ -38,7 +38,7 @@ public class Wallet {
     @Enumerated(EnumType.STRING)
     private Type walletType;
 
-        @OneToMany(mappedBy = "wallet", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "wallet", fetch = FetchType.EAGER)
     @JsonProperty("expenses")
     private List<Expense> expenses;
 

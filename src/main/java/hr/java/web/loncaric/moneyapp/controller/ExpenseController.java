@@ -50,6 +50,7 @@ public class ExpenseController {
      }*/
 
 
+
     @GetMapping("/new")
     public String showNewExpenseForm(Model model) {
 
@@ -61,6 +62,7 @@ public class ExpenseController {
             model.addAttribute("wallet", new Wallet());
             return "newWallet";
         }
+
         log.info("GET request - /expenses/new  - showing index screen");
         model.addAttribute("wallets", userWallets);
         model.addAttribute("expense", new Expense());

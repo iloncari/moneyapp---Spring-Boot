@@ -98,4 +98,16 @@ public class Expense {
     public void setId(Long id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return "Expense{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", expenseType=" + expenseType +
+                ", createDate=" + createDate +
+                ", wallet=" + wallet +
+                '}';
+    }
 }
